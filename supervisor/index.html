@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Enade Ufes - Supervisor de Estágio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    /* Página do supervisor de estágio da AP (link pessoal, sem login) -- 20_SupervisoresAP.gs */
+    * { box-sizing:border-box; }
+    html, body { margin:0; height:100%; }
+    body { font-family:'Inter', system-ui, -apple-system, sans-serif; background:#f4f5f7; color:#0f172a; -webkit-tap-highlight-color:transparent; }
+    .sp-app { display:flex; flex-direction:column; height:100%; }
+    .sp-topo { background:#1e1040; padding:10px 14px; padding-top:calc(10px + env(safe-area-inset-top)); flex:0 0 auto; }
+    .sp-logo { background:#fff; border-radius:10px; padding:5px 10px; display:inline-flex; min-height:40px; align-items:center; }
+    .sp-logo img { height:38px; display:block; }
+    .sp-rol { flex:1 1 auto; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+    .sp-miolo { max-width:560px; margin:0 auto; padding:16px 14px calc(28px + env(safe-area-inset-bottom)); }
+    .sp-card { background:#fff; border:1px solid #e5e7eb; border-radius:14px; padding:15px; margin-bottom:12px; }
+    h1 { font-size:21px; font-weight:800; margin:0 0 8px; }
+    h2 { font-size:16px; font-weight:800; margin:0 0 10px; }
+    p, li { font-size:14.5px; line-height:1.55; color:#334155; }
+    p { margin:0 0 10px; } p:last-child { margin-bottom:0; }
+    ol, ul { margin:0; padding-left:20px; } li { margin-bottom:6px; }
+    a { color:#1d4ed8; }
+    details { border:1px solid #e5e7eb; border-radius:11px; margin-top:10px; overflow:hidden; }
+    summary { display:flex; justify-content:space-between; align-items:center; padding:13px 14px; min-height:48px; font-weight:600; font-size:14.5px; background:#f8fafc; cursor:pointer; list-style:none; }
+    summary::-webkit-details-marker { display:none; }
+    details[open] summary .material-icons { transform:rotate(180deg); }
+    details > div { padding:12px 14px; }
+    .sp-lgpd { background:#eff6ff; border-left:4px solid #1d4ed8; border-radius:0 10px 10px 0; padding:11px 13px; font-size:13.5px; line-height:1.55; color:#1e3a8a; margin-bottom:14px; }
+    .sp-aviso { background:#fffbeb; border-left:4px solid #f59e0b; border-radius:0 10px 10px 0; padding:11px 13px; font-size:14px; line-height:1.5; color:#78350f; margin-bottom:14px; }
+    label { display:block; font-weight:600; font-size:14px; color:#1e293b; margin:14px 0 6px; }
+    input[type=text], input[type=tel] { width:100%; font:16px 'Inter', sans-serif; border:1px solid #cbd5e1; border-radius:10px; padding:12px; min-height:48px; color:#0f172a; background:#fff; }
+    input:focus { outline:2px solid #4c3a8f; outline-offset:1px; }
+    .sp-dica { font-size:12.5px; color:#64748b; margin-top:5px; }
+    .sp-chips { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+    .sp-chip { display:inline-flex; align-items:center; gap:4px; background:#ede9fe; color:#4c1d95; border-radius:999px; padding:7px 6px 7px 12px; font-size:13px; font-weight:600; }
+    .sp-chip button { border:0; background:transparent; color:#4c1d95; width:28px; height:28px; display:flex; align-items:center; justify-content:center; }
+    .sp-chip .material-icons { font-size:17px; }
+    .sp-lista { border:1px solid #cbd5e1; border-radius:10px; margin-top:6px; max-height:280px; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+    .sp-lista button { display:block; width:100%; text-align:left; border:0; border-bottom:1px solid #eef0f3; background:#fff; padding:11px 12px; min-height:48px; font:500 15px 'Inter', sans-serif; color:#0f172a; }
+    .sp-lista small { display:block; font-size:12px; color:#64748b; }
+    .sp-vazio { padding:12px; font-size:13.5px; color:#64748b; }
+    .sp-check { display:flex; gap:10px; align-items:flex-start; margin-top:16px; font-size:14px; line-height:1.5; color:#334155; }
+    .sp-check input { width:22px; height:22px; margin-top:1px; flex:0 0 auto; }
+    .sp-btn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; border:0; border-radius:12px; padding:14px; min-height:52px; margin-top:16px; font:700 15.5px 'Inter', sans-serif; background:#121212; color:#fff; cursor:pointer; }
+    .sp-btn:disabled { opacity:.6; }
+    .sp-resumo { display:grid; gap:9px; }
+    .sp-resumo div { font-size:12px; color:#64748b; } .sp-resumo b { display:block; font-size:15px; color:#0f172a; font-weight:600; }
+    .sp-ok { display:inline-flex; align-items:center; gap:5px; background:#dcfce7; color:#14532d; border-radius:999px; padding:6px 12px; font-size:13.5px; font-weight:700; margin-bottom:12px; }
+    .sp-carregando { text-align:center; padding:60px 0; color:#475569; font-weight:600; }
+    .sp-erro { color:#b91c1c; font-size:13.5px; margin-top:8px; display:none; }
+  </style>
+</head>
+<body>
+<div class="sp-app">
+  <header class="sp-topo"><span class="sp-logo"><img id="sp-logo" alt="Enade das Licenciaturas - Ufes" style="display:none"></span></header>
+  <main class="sp-rol"><div class="sp-miolo" id="sp-miolo"><div class="sp-carregando">Carregando...</div></div></main>
+</div>
+<script>
+  // ---- Gerado por github-pages/gerar_paginas.py: esta página roda FORA do Google ----
+  // google.script.run vira um pedido ao canal de dados do GAS (27_ApiExterna.gs).
+  // credentials:'omit' = não leva as contas Google do navegador (é isso que evita o bloqueio).
+  const PARAMS_PAGINA = new URLSearchParams(location.search);
+  const API_EXTERNA = PARAMS_PAGINA.get('amb') === 'teste' ? 'https://script.google.com/macros/s/AKfycbxRq7IjT_EOELaXeaemiLgvhGLTEUHAeKua3VxSQQE9Onrxnt273m7yefoJP07sUvtuRQ/exec' : 'https://script.google.com/macros/s/AKfycbz8OkfJ3qpL83c93IBIm_ZoAS0RCAMAG6ddy7mGh_HHRyy8Ogsd3BI5WeFqT4LYgNu6Ug/exec';
+  const TRADUCAO_API = { getLogoCurso: ['logo.licenciatura', []], getListaEscolasAP: ['supervisor.escolas', []], getCadastroSupervisorAP: ['supervisor.carregar', ['token']], salvarCadastroSupervisorAP: ['supervisor.salvar', ['token', 'dados']] };
+  function ChamadaApi() { this.ok = function () {}; this.falha = function () {}; }
+  ChamadaApi.prototype.withSuccessHandler = function (f) { this.ok = f; return this; };
+  ChamadaApi.prototype.withFailureHandler = function (f) { this.falha = f; return this; };
+  Object.keys(TRADUCAO_API).forEach(function (nomeFuncao) {
+    ChamadaApi.prototype[nomeFuncao] = function () {
+      const t = TRADUCAO_API[nomeFuncao], pedido = { acao: t[0] }, ok = this.ok, falha = this.falha, args = arguments;
+      t[1].forEach(function (nomeArg, k) { pedido[nomeArg] = args[k]; });
+      fetch(API_EXTERNA, { method: 'POST', credentials: 'omit', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(pedido) })
+        .then(function (r) { return r.json(); })
+        .then(function (r) { if (r && r.ok) ok(r.resultado); else falha(new Error((r && r.msg) || 'Resposta inválida do servidor.')); })
+        .catch(function (e) { falha(e); });
+    };
+  });
+  const google = { script: {} };
+  Object.defineProperty(google.script, 'run', { get: function () { return new ChamadaApi(); } });
+
+  // Falha aqui não é o problema das contas Google: é internet ou o servidor fora do ar.
+  function avisoFalhaConexaoExterna(e) {
+    document.getElementById('sp-miolo').innerHTML = '<div class="sp-card"><h1>Não foi possível abrir o seu cadastro</h1>'
+      + '<p>Verifique a sua conexão com a internet e tente de novo em alguns minutos.</p>'
+      + '<button type="button" class="sp-btn" onclick="location.reload()">Tentar de novo</button>'
+      + '<p class="sp-dica" style="margin-top:12px">Se continuar, escreva para <a href="mailto:enade@ufes.br">enade@ufes.br</a>. Detalhe técnico: ' + esc(e && e.message) + '</p></div>';
+  }
+  // ---- fim do trecho gerado ----
+  const TOKEN = String(new URLSearchParams(location.search).get('sup') || '').replace(/[^a-zA-Z0-9]/g, '');
+  const URL_AJUDA_ANONIMA = 'https://sistemaenade.ufes.br/anonima';
+  const LINK_PROPRIO = location.href;
+  let SP = { dados: null, escolas: [], mapa: {}, sel: [], editando: false };
+
+  function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function norm(s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().trim(); }
+  function soDigitos(s) { return String(s || '').replace(/\D/g, ''); }
+  function mascCpf(el) { const d = soDigitos(el.value).slice(0, 11); el.value = d.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2'); }
+  function mascCel(el) { const d = soDigitos(el.value).slice(0, 11); el.value = d.length > 2 ? '(' + d.slice(0, 2) + ') ' + (d.length > 7 ? d.slice(2, 7) + '-' + d.slice(7) : d.slice(2)) : d; }
+  function cpfValido(cpf) {
+    const c = soDigitos(cpf);
+    if (c.length !== 11 || /^(\d)\1{10}$/.test(c)) return false;
+    for (let t = 9; t < 11; t++) { let s = 0; for (let i = 0; i < t; i++) s += Number(c[i]) * ((t + 1) - i); if (((s * 10) % 11) % 10 !== Number(c[t])) return false; }
+    return true;
+  }
+
+  google.script.run.withSuccessHandler(logo => { const i = document.getElementById('sp-logo'); i.src = logo; i.style.display = ''; }).getLogoCurso('LICENCIATURA');
+  google.script.run.withSuccessHandler(lista => { SP.escolas = (lista || []).map(e => ({ nome: String(e[0]), inep: String(e[1]) })); SP.escolas.forEach(e => { SP.mapa[e.inep] = e.nome; }); }).getListaEscolasAP();
+  google.script.run.withSuccessHandler(d => {
+    if (!d || !d.sucesso) { document.getElementById('sp-miolo').innerHTML = '<div class="sp-card"><p>' + esc((d && d.msg) || 'Não foi possível abrir o seu cadastro.') + '</p></div>'; return; }
+    SP.dados = d; SP.sel = d.escolas.map(e => e.inep); d.escolas.forEach(e => { SP.mapa[e.inep] = SP.mapa[e.inep] || e.nome; });
+    SP.editando = !d.cadastrado || d.reconfirmarEscolas;
+    render();
+  }).withFailureHandler(avisoFalhaConexaoExterna).getCadastroSupervisorAP(TOKEN);
+
+  // Falha de conexão: quase sempre é o Google bloqueando por haver mais de uma conta Google aberta
+  // no navegador. Orienta a abrir o link pessoal numa janela anônima.
+  function avisoJanelaAnonimaSup(e) {
+    document.getElementById('sp-miolo').innerHTML = `<div class="sp-card"><h1>Não foi possível abrir o seu cadastro</h1>
+      <div class="sp-aviso">Isso costuma acontecer quando há <b>mais de uma conta Google aberta</b> neste navegador (por exemplo, uma do trabalho e uma pessoal). Abra o seu link numa <b>janela anônima</b>.</div>
+      <p><a href="${esc(URL_AJUDA_ANONIMA)}" target="_blank" rel="noopener"><b>Veja como abrir uma janela anônima</b></a></p>
+      <label for="sp-link-proprio">Seu link pessoal (copie e cole na janela anônima):</label>
+      <input type="text" id="sp-link-proprio" readonly value="${esc(LINK_PROPRIO)}" onclick="this.select()">
+      <p class="sp-dica">Detalhe técnico: ${esc(e && e.message)}</p></div>`;
+  }
+
+  function render() {
+    const d = SP.dados, primeiro = String(d.nome || '').split(' ')[0];
+    const est = d.estudantes || [];
+    const quem = est.length === 1
+      ? 'O(a) estudante <b>' + esc(est[0].nome) + '</b>' + (est[0].escola ? ' (' + esc(est[0].escola) + ')' : '') + ' indicou você'
+      : (est.length > 1 ? 'Os estudantes <b>' + est.map(e => esc(e.nome)).join(', ') + '</b> indicaram você' : 'Você foi indicado(a)');
+    let html = `<div class="sp-card"><h1>Olá, ${esc(primeiro)}!</h1>
+      <p>${quem} como <b>supervisor(a) de estágio</b> na Avaliação da Prática do Enade ${esc(d.ano)}.</p>
+      <details><summary>O que faz o supervisor?<i class="material-icons">expand_more</i></summary><div>
+        <p>A Avaliação da Prática observa uma aula dada pelo estagiário de licenciatura, com o respectivo plano de aula, durante o estágio supervisionado obrigatório na escola. Ao se tornar supervisor(a) da AP, você atua como avaliador(a) externo(a) do Inep.</p>
+        <ol><li>Depois de ser cadastrado(a) pela Ufes como supervisor(a), complete o seu cadastro no Sistema Enade (Inep).</li>
+        <li>Faça a capacitação on-line, autoinstrucional, no Sistema Enade, no horário que preferir.</li>
+        <li>Combine com o estagiário o dia da regência, assista e avalie a aula com base no plano apresentado.</li>
+        <li>Preencha no Sistema Enade o Instrumento de Avaliação da Prática pelo Supervisor em até <b>10 dias corridos</b> após a regência. Cada estagiário só pode ser avaliado uma vez.</li></ol>
+      </div></details>
+      <details><summary>Auxílio de R$ 100 por avaliação<i class="material-icons">expand_more</i></summary><div>
+        <p>O supervisor recebe o Auxílio de Avaliação Educacional (AAE) de <b>R$ 100,00 por avaliação</b> realizada, até <b>R$ 1.000,00 por semestre</b>. O pagamento é feito pelo MEC e pode sofrer atrasos.</p>
+      </div></details>
+      <details><summary>Materiais do Inep e contato<i class="material-icons">expand_more</i></summary><div>
+        <ul><li><a href="https://download.inep.gov.br/enade_das_licenciaturas/guia_do_supervisor_da_avaliacao_pratica.pdf" target="_blank">Guia do Supervisor da Avaliação da Prática</a></li>
+        <li><a href="https://download.inep.gov.br/enade_das_licenciaturas/manual_funcionalidades_perfil_supervisor_2.pdf" target="_blank">Passo a passo do Sistema Enade</a></li>
+        <li><a href="https://enade.inep.gov.br" target="_blank">Sistema Enade (Inep)</a></li>
+        <li><a href="https://enade.ufes.br/%C3%A1rea-do-professor/supervisor-de-est%C3%A1gio" target="_blank">Página do supervisor no site do Enade Ufes</a></li></ul>
+        <p style="margin-top:10px">Dúvidas: <a href="mailto:enade@ufes.br">enade@ufes.br</a>. Os prazos não são prorrogáveis.</p>
+      </div></details></div>`;
+
+    html += '<div class="sp-card"><h2>Seu cadastro</h2>';
+    if (d.cadastrado && !SP.editando) {
+      html += `<span class="sp-ok"><i class="material-icons" style="font-size:18px">check_circle</i>Cadastro completo</span>
+        <div class="sp-resumo"><div>Nome<b>${esc(d.nome)}</b></div><div>CPF<b>${esc(d.cpfMasc)}</b></div><div>Celular<b>${esc(d.celularMasc)}</b></div>
+        <div>Escolas onde você trabalha<b>${d.escolas.map(e => esc(e.nome)).join('<br>')}</b></div></div>
+        <button type="button" class="sp-btn" style="background:#fff;color:#0f172a;border:1.5px solid #cbd5e1" onclick="SP.editando=true; render()"><i class="material-icons">edit</i>Atualizar o meu cadastro</button>`;
+    } else {
+      html += `<div class="sp-lgpd"><b>Proteção dos seus dados (LGPD):</b> os seus dados ficam guardados apenas na base da Secretaria de Avaliação Institucional (Seavin/Ufes) e são usados somente para a sua inscrição como supervisor(a) no Inep. Nem coordenadores de curso, nem estudantes, nem orientadores de estágio têm acesso a eles. Só entraremos em contato em caso de extrema necessidade.</div>
+        ${d.reconfirmarEscolas ? '<div class="sp-aviso"><b>Nova edição do Enade:</b> confirme as escolas onde você trabalha em ' + esc(d.ano) + '. Tire as que não valem mais e acrescente as novas.</div>' : ''}
+        <label for="sp-nome">Nome completo</label>
+        <input type="text" id="sp-nome" autocomplete="name" value="${esc(d.nome)}">
+        <label for="sp-cpf">CPF</label>
+        <input type="text" id="sp-cpf" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="${d.cadastrado ? esc(d.cpfMasc) + ' (deixe em branco para manter)' : '000.000.000-00'}" oninput="mascCpf(this)" onpaste="return false" ondrop="return false">
+        <label for="sp-cpf2">Confirme o CPF</label>
+        <input type="text" id="sp-cpf2" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="000.000.000-00" oninput="mascCpf(this)" onpaste="return false" ondrop="return false">
+        <div class="sp-dica">Colar está desativado nos campos de CPF, para evitar erro de digitação.</div>
+        <label for="sp-cel">Celular (com DDD)</label>
+        <input type="tel" id="sp-cel" inputmode="numeric" autocomplete="tel-national" maxlength="15" placeholder="${d.cadastrado ? esc(d.celularMasc) + ' (deixe em branco para manter)' : '(27) 99999-9999'}" oninput="mascCel(this)">
+        <label for="sp-escola-busca">Escolas de educação básica onde você trabalha</label>
+        <div class="sp-chips" id="sp-chips"></div>
+        <input type="text" id="sp-escola-busca" autocomplete="off" placeholder="Busque pelo nome da escola" oninput="buscarEscola(this.value)">
+        <div class="sp-lista" id="sp-escolas" style="display:none"></div>
+        <label class="sp-check"><input type="checkbox" id="sp-aceite"><span>Estou ciente de como os meus dados serão usados e guardados, conforme o aviso acima.</span></label>
+        <div class="sp-erro" id="sp-erro"></div>
+        <button type="button" class="sp-btn" id="sp-salvar" onclick="salvar()"><i class="material-icons">check</i>Salvar cadastro</button>`;
+    }
+    html += '</div>';
+    document.getElementById('sp-miolo').innerHTML = html;
+    if (SP.editando || !d.cadastrado) renderChips();
+  }
+
+  function renderChips() {
+    document.getElementById('sp-chips').innerHTML = SP.sel.map(i => `<span class="sp-chip">${esc(SP.mapa[i] || ('Inep ' + i))}<button type="button" aria-label="Remover" onclick="tirarEscola('${esc(i)}')"><i class="material-icons">close</i></button></span>`).join('');
+  }
+  function tirarEscola(i) { SP.sel = SP.sel.filter(x => x !== i); renderChips(); }
+  function buscarEscola(v) {
+    const box = document.getElementById('sp-escolas'), t = norm(v);
+    if (t.length < 3) { box.style.display = 'none'; return; }
+    const r = SP.escolas.filter(e => SP.sel.indexOf(e.inep) === -1 && (norm(e.nome).indexOf(t) > -1 || e.inep.indexOf(t) > -1)).slice(0, 30);
+    box.innerHTML = r.length ? r.map(e => `<button type="button" onclick="porEscola('${esc(e.inep)}')">${esc(e.nome)}<small>Inep ${esc(e.inep)}</small></button>`).join('') : '<div class="sp-vazio">Nenhuma escola encontrada com esse nome.</div>';
+    box.style.display = '';
+  }
+  function porEscola(i) {
+    if (SP.sel.indexOf(i) === -1) SP.sel.push(i);
+    document.getElementById('sp-escola-busca').value = ''; document.getElementById('sp-escolas').style.display = 'none';
+    renderChips();
+  }
+
+  function erro(m) { const e = document.getElementById('sp-erro'); e.textContent = m; e.style.display = 'block'; }
+  function salvar() {
+    const d = SP.dados;
+    const nome = document.getElementById('sp-nome').value.trim();
+    const cpf = soDigitos(document.getElementById('sp-cpf').value), cpf2 = soDigitos(document.getElementById('sp-cpf2').value);
+    const cel = soDigitos(document.getElementById('sp-cel').value);
+    if (nome.split(/\s+/).length < 2) return erro('Informe o seu nome completo.');
+    if (cpf || !d.cadastrado) {
+      if (!cpfValido(cpf)) return erro('CPF inválido. Confira a digitação.');
+      if (cpf !== cpf2) return erro('Os dois CPFs não são iguais. Confira a digitação.');
+    }
+    if (cel || !d.cadastrado) { if (cel.length !== 11 || cel[2] !== '9') return erro('Informe um celular válido, com DDD (11 dígitos).'); }
+    if (!SP.sel.length) return erro('Informe ao menos uma escola onde você trabalha.');
+    if (!document.getElementById('sp-aceite').checked) return erro('Marque a ciência sobre o uso dos seus dados.');
+    const btn = document.getElementById('sp-salvar'); btn.disabled = true; btn.textContent = 'Salvando...';
+    google.script.run.withSuccessHandler(r => {
+      if (!r || !r.sucesso) { btn.disabled = false; btn.innerHTML = '<i class="material-icons">check</i>Salvar cadastro'; return erro((r && r.msg) || 'Não foi possível salvar.'); }
+      google.script.run.withSuccessHandler(dd => { SP.dados = dd; SP.sel = dd.escolas.map(e => e.inep); SP.editando = false; render(); window.scrollTo(0, 0); }).getCadastroSupervisorAP(TOKEN);
+    }).withFailureHandler(e => { btn.disabled = false; btn.innerHTML = '<i class="material-icons">check</i>Salvar cadastro'; erro('Erro de conexão: ' + e.message); })
+      .salvarCadastroSupervisorAP(TOKEN, { nome: nome, cpf: cpf, celular: cel, escolas: SP.sel, aceite: true });
+  }
+</script>
+</body>
+</html>
