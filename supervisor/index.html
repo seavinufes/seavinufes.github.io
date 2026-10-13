@@ -14,8 +14,10 @@
     body { font-family:'Inter', system-ui, -apple-system, sans-serif; background:#f4f5f7; color:#0f172a; -webkit-tap-highlight-color:transparent; }
     .sp-app { display:flex; flex-direction:column; height:100%; }
     .sp-topo { background:#1e1040; padding:10px 14px; padding-top:calc(10px + env(safe-area-inset-top)); flex:0 0 auto; }
-    .sp-logo { background:#fff; border-radius:10px; padding:5px 10px; display:inline-flex; min-height:40px; align-items:center; }
+    /* Enade das Licenciaturas e Ufes no mesmo cartão branco, separados por um fio (marcas parceiras) */
+    .sp-logo { background:#fff; border-radius:10px; padding:6px 12px; display:inline-flex; min-height:44px; align-items:center; gap:12px; }
     .sp-logo img { height:38px; display:block; }
+    .sp-logo .sp-fio { width:1px; align-self:stretch; background:#cbd5e1; }
     .sp-rol { flex:1 1 auto; overflow-y:auto; -webkit-overflow-scrolling:touch; }
     .sp-miolo { max-width:560px; margin:0 auto; padding:16px 14px calc(28px + env(safe-area-inset-bottom)); }
     .sp-card { background:#fff; border:1px solid #e5e7eb; border-radius:14px; padding:15px; margin-bottom:12px; }
@@ -57,7 +59,7 @@
 </head>
 <body>
 <div class="sp-app">
-  <header class="sp-topo"><span class="sp-logo"><img id="sp-logo" alt="Enade das Licenciaturas - Ufes" style="display:none"></span></header>
+  <header class="sp-topo"><span class="sp-logo"><img id="sp-logo" alt="Enade das Licenciaturas - Ufes" style="display:none"><span class="sp-fio"></span><img src="data:image/png;base64,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" alt="Universidade Federal do Espírito Santo"></span></header>
   <main class="sp-rol"><div class="sp-miolo" id="sp-miolo"><div class="sp-carregando">Carregando...</div></div></main>
 </div>
 <script>
@@ -129,29 +131,40 @@
   }
 
   function render() {
-    const d = SP.dados, primeiro = String(d.nome || '').split(' ')[0];
+    const d = SP.dados;
     const est = d.estudantes || [];
-    const quem = est.length === 1
-      ? 'O(a) estudante <b>' + esc(est[0].nome) + '</b>' + (est[0].escola ? ' (' + esc(est[0].escola) + ')' : '') + ' indicou você'
-      : (est.length > 1 ? 'Os estudantes <b>' + est.map(e => esc(e.nome)).join(', ') + '</b> indicaram você' : 'Você foi indicado(a)');
-    let html = `<div class="sp-card"><h1>Olá, ${esc(primeiro)}!</h1>
-      <p>${quem} como <b>supervisor(a) de estágio</b> na Avaliação da Prática do Enade ${esc(d.ano)}.</p>
+    // Abertura no mesmo padrão do e-mail ao supervisor (EMAIL_AP_SUPERVISOR)
+    const escolasEst = est.map(e => e.escola).filter((x, k, l) => x && l.indexOf(x) === k);
+    let vinculo = '';
+    if (est.length === 1 || (est.length > 1 && escolasEst.length <= 1)) {
+      if (escolasEst.length) vinculo += `<p><b>Escola:</b>&nbsp;${esc(escolasEst[0])}</p>`;
+      vinculo += `<p><b>${est.length > 1 ? 'Estudantes' : 'Estudante'}:</b>&nbsp;${est.map(e => esc(e.nome)).join(', ')}</p>`;
+    } else if (est.length > 1) {
+      vinculo += '<p><b>Estudantes:</b></p><ul style="margin-bottom:10px">' + est.map(e => `<li>${esc(e.nome)}${e.escola ? ' &ndash; ' + esc(e.escola) : ''}</li>`).join('') + '</ul>';
+    }
+    let html = `<div class="sp-card"><p>Prezado(a) professor(a) <b>${esc(d.nome)}</b>,</p>
+      <p>Você foi indicado(a) como <b>supervisor(a) de estágio</b> na <b>Avaliação da Prática do Enade ${esc(d.ano)}.</b></p>
+      ${vinculo}
       <details><summary>O que faz o supervisor?<i class="material-icons">expand_more</i></summary><div>
-        <p>A Avaliação da Prática observa uma aula dada pelo estagiário de licenciatura, com o respectivo plano de aula, durante o estágio supervisionado obrigatório na escola. Ao se tornar supervisor(a) da AP, você atua como avaliador(a) externo(a) do Inep.</p>
-        <ol><li>Depois de ser cadastrado(a) pela Ufes como supervisor(a), complete o seu cadastro no Sistema Enade (Inep).</li>
-        <li>Faça a capacitação on-line, autoinstrucional, no Sistema Enade, no horário que preferir.</li>
-        <li>Combine com o estagiário o dia da regência, assista e avalie a aula com base no plano apresentado.</li>
-        <li>Preencha no Sistema Enade o Instrumento de Avaliação da Prática pelo Supervisor em até <b>10 dias corridos</b> após a regência. Cada estagiário só pode ser avaliado uma vez.</li></ol>
+        <p>A <b>Avaliação da Prática (&quot;AP&quot;)</b> é a parte do Enade das Licenciaturas em que um(a) professor(a) da escola, o(a) <b>supervisor(a)</b>, assiste a uma aula dada pelo(a) estagiário(a) durante o estágio supervisionado obrigatório e a avalia com base no plano de aula.</p>
+        <p>O Enade é aplicado pelo <b>Inep</b> (Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira), órgão do <b>Ministério da Educação (MEC)</b>. A capacitação e a avaliação são feitas no <b>Sistema Enade do Inep</b>, em <a href="https://enade.inep.gov.br" target="_blank" rel="noopener">enade.inep.gov.br</a>, com a sua conta gov.br.</p>
+        <ol><li>Complete o seu cadastro <b>nesta página</b>. Com ele, a Ufes inscreve você como supervisor(a) no Sistema Enade do Inep.</li>
+        <li>Depois da inscrição, entre no <a href="https://enade.inep.gov.br" target="_blank" rel="noopener">Sistema Enade do Inep</a> e complete lá o seu cadastro.</li>
+        <li>Faça, no mesmo Sistema Enade, a <b>capacitação on-line</b> obrigatória. Ela é autoinstrucional: você faz no horário que preferir.</li>
+        <li>Combine com o(a) estagiário(a) o dia da <b>regência</b> (a aula). Assista à aula e avalie-a com base no plano de aula apresentado.</li>
+        <li>Preencha, no Sistema Enade, o <b>Instrumento de Avaliação da Prática pelo Supervisor</b> em até <b>10 dias corridos</b> após a regência. Cada estagiário(a) só pode ser avaliado(a) uma vez.</li></ol>
+        <p style="margin-top:10px">Os prazos de cada etapa são definidos pelo <b>Edital da AP vigente</b>, publicado pelo Inep/MEC, e não podem ser prorrogados. Veja o <a href="https://enade.ufes.br/enade-licenciaturas/cronograma-ap" target="_blank" rel="noopener">cronograma da AP</a>.</p>
       </div></details>
       <details><summary>Auxílio de R$ 100 por avaliação<i class="material-icons">expand_more</i></summary><div>
-        <p>O supervisor recebe o Auxílio de Avaliação Educacional (AAE) de <b>R$ 100,00 por avaliação</b> realizada, até <b>R$ 1.000,00 por semestre</b>. O pagamento é feito pelo MEC e pode sofrer atrasos.</p>
+        <p>O(a) supervisor(a) recebe o <b>Auxílio de Avaliação Educacional (AAE)</b> de <b>R$ 100,00 por avaliação</b> realizada, até <b>R$ 1.000,00 por semestre</b>. O pagamento é feito pelo Inep/MEC, não pela Ufes, e pode atrasar.</p>
       </div></details>
-      <details><summary>Materiais do Inep e contato<i class="material-icons">expand_more</i></summary><div>
-        <ul><li><a href="https://download.inep.gov.br/enade_das_licenciaturas/guia_do_supervisor_da_avaliacao_pratica.pdf" target="_blank">Guia do Supervisor da Avaliação da Prática</a></li>
-        <li><a href="https://download.inep.gov.br/enade_das_licenciaturas/manual_funcionalidades_perfil_supervisor_2.pdf" target="_blank">Passo a passo do Sistema Enade</a></li>
-        <li><a href="https://enade.inep.gov.br" target="_blank">Sistema Enade (Inep)</a></li>
-        <li><a href="https://enade.ufes.br/%C3%A1rea-do-professor/supervisor-de-est%C3%A1gio" target="_blank">Página do supervisor no site do Enade Ufes</a></li></ul>
-        <p style="margin-top:10px">Dúvidas: <a href="mailto:enade@ufes.br">enade@ufes.br</a>. Os prazos não são prorrogáveis.</p>
+      <details><summary>Tutoriais, guias e links úteis<i class="material-icons">expand_more</i></summary><div>
+        <ul><li><a href="https://download.inep.gov.br/enade_das_licenciaturas/guia_do_supervisor_da_avaliacao_pratica.pdf" target="_blank" rel="noopener">Guia do Supervisor da Avaliação da Prática</a> (Inep/MEC)</li>
+        <li><a href="https://download.inep.gov.br/enade_das_licenciaturas/manual_funcionalidades_perfil_supervisor_2.pdf" target="_blank" rel="noopener">Passo a passo do Sistema Enade para o supervisor</a> (Inep/MEC)</li>
+        <li><a href="https://enade.inep.gov.br" target="_blank" rel="noopener">Sistema Enade do Inep</a>: cadastro, capacitação e avaliação</li>
+        <li><a href="https://enade.ufes.br/enade-licenciaturas/cronograma-ap" target="_blank" rel="noopener">Cronograma da AP</a>: prazos do edital vigente</li>
+        <li><a href="https://enade.ufes.br/%C3%A1rea-do-professor/supervisor-de-est%C3%A1gio" target="_blank" rel="noopener">Página do supervisor no site do Enade Ufes</a></li></ul>
+        <p style="margin-top:10px">Dúvidas: <a href="mailto:enade@ufes.br">enade@ufes.br</a> (Seavin/Ufes).</p>
       </div></details></div>`;
 
     html += '<div class="sp-card"><h2>Seu cadastro</h2>';
